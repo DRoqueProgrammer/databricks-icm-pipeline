@@ -13,6 +13,7 @@ Take a raw data source and produce a Bronze notebook that ingests it into the Br
 | Shared | `../../shared/databricks-free-edition-gotchas.md` | "Read this first" -- sections 1, 2, 5, 6 (only the Free Edition traps likely to hit during ingest) | Free Edition traps |
 | Shared | `../../shared/volume-paths.md` | "Layout" + "Volume creation" | Where Bronze lands |
 | Reference | `references/bronze-ingest-patterns.md` | Full file | Code patterns for common sources |
+| Reference | `references/bronze-pitfalls.md` | Full file | Common pitfalls and what Bronze should NEVER do |
 | Reference | `references/notebook-template.py` | Full file | Starting skeleton for the notebook |
 
 Do NOT load Silver/Gold/Report references at this stage. They are not relevant to raw ingest.

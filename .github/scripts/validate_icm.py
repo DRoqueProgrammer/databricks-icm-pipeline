@@ -75,19 +75,26 @@ def is_setup_gotchas_doc(path: Path) -> bool:
 
 
 def line_count_check() -> list[str]:
-    """CONTEXT.md <=80L, reference files <=200L."""
+    """CONTEXT.md <=80L, reference files <=200L.
+
+    Bundled skills are exempted (they are third-party reference material
+    we copy as-is; the upstream author chose that size)."""
     issues = []
     for f in REPO_ROOT.rglob("*"):
         if not f.is_file() or f.suffix not in SCAN_EXTS:
             continue
         if is_in_icm_reference(f):
             continue
+        if is_in_skills(f):
+            continue
         rel = f.relative_to(REPO_ROOT)
         try:
             content = f.read_text(encoding="utf-8")
         except UnicodeDecodeError:
             continue
-        lines = content.count("\n") + 1
+        # Count lines portably. Normalize CRLF (Windows) and CR (old Mac)
+        # to LF so CRLF and LF yield the same count across OSes.
+        lines = len(content.replace("\r\n", "\n").replace("\r", "\n").split("\n"))
 
         if f.name == "CONTEXT.md" and lines > 80:
             issues.append(f"CONTEXT.md too long ({lines} lines > 80): {rel}")

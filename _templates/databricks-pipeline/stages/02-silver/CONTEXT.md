@@ -14,6 +14,7 @@ Take the Bronze notebook that landed in `stages/01-bronze/output/` and produce a
 | Shared | `../../shared/databricks-free-edition-gotchas.md` | Sections 1, 2, 5 (only as needed) | Free Edition traps when writing Delta |
 | Shared | `../../shared/volume-paths.md` | "Layout" -- silver_cleansed and quarantine paths | Output paths |
 | Reference | `references/silver-transforms.md` | Full file | Code patterns for the common transforms |
+| Reference | `references/silver-output-and-report.md` | Full file | Write Silver Delta, DQ report, what Silver should NEVER do |
 | Reference | `references/expectations.md` | Full file | GE expectation syntax (or Soda fallback) |
 
 Do NOT load Bronze references or Gold/Report references.
