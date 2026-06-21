@@ -49,7 +49,7 @@ You can stop after any stage. The output folder is yours to edit.
 
 ## See also
 
-- `CLAUDE.md` — full folder map and routing
-- `CONTEXT.md` — task routing table
-- `_core/CONVENTIONS.md` (in the ICM repo) — the patterns this template follows
-- `shared/databricks-free-edition-gotchas.md` — the operational quirks baked into every stage
+- `CLAUDE.md` -- full folder map and routing
+- `CONTEXT.md` -- task routing table
+- `_core/CONVENTIONS.md` (in the ICM repo) -- the patterns this template follows
+- `shared/databricks-free-edition-gotchas.md` -- the operational quirks baked into every stage

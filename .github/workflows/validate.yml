@@ -1,0 +1,44 @@
+name: validate-icm
+
+# Enforces the ICM conventions from
+# https://github.com/RinDig/Interpreted-Context-Methdology/blob/main/_core/CONVENTIONS.md
+#
+# Runs on every push and PR. Cheap (pure Python, no Databricks), so it can run
+# on every commit without burning credits.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate ICM conventions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate workspace structure
+        run: python .github/scripts/validate_icm.py
+
+      - name: Show summary
+        if: always()
+        run: |
+          if [ -f .icm-validation-report.txt ]; then
+            echo "## ICM Validation Report" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat .icm-validation-report.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
