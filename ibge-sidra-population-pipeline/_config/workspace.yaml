@@ -1,0 +1,48 @@
+# Workspace Configuration (Layer 3 Factory)
+#
+# This file is the single source of truth for Databricks connection details
+# and resource paths. Every stage reads from here.
+#
+# Replace the {{PLACEHOLDERS}} during `setup`. Once filled in, this file
+# should be re-read at the start of every stage but never edited mid-run.
+
+# ---------- Workspace identity ----------
+databricks_workspace_url: "https://dbc-ad8bbac7-4dce.cloud.databricks.com"   # e.g. https://dbc-ad8bbac7-4dce.cloud.databricks.com
+databricks_workspace_id: "dbc-ad8bbac7-4dce"     # workspace ID from the URL slug
+auth_method: "oidc"                              # "oidc" | "pat" (Free Edition 2026+ is OIDC only)
+profile_name: "DEFAULT"                      # CLI profile name, default: "DEFAULT"
+
+# ---------- Unity Catalog ----------
+catalog_name: "ibge"                            # top-level catalog for this dataset
+bronze_schema: "ibge_sidra_population_bronze"                          # default: "{dataset_slug}_bronze"
+silver_schema: "ibge_sidra_population_silver"                          # default: "{dataset_slug}_silver"
+gold_schema:   "ibge_sidra_population_gold"                            # default: "{dataset_slug}_gold"
+
+# ---------- Volume paths (CRITICAL: must use dbfs:/ prefix even for Volumes) ----------
+# See shared/databricks-free-edition-gotchas.md for why.
+volume_root: "dbfs:/Volumes/ibge/ibge_sidra_population_bronze/raw"                              # e.g. dbfs:/Volumes/{catalog}/{bronze_schema}/raw
+bronze_volume_path: "dbfs:/Volumes/ibge/ibge_sidra_population_bronze/raw"                # e.g. dbfs:/Volumes/{catalog}/{bronze_schema}/raw
+silver_volume_path: "dbfs:/Volumes/ibge/ibge_sidra_population_silver/cleansed"                # e.g. dbfs:/Volumes/{catalog}/{silver_schema}/cleansed
+gold_volume_path:   "dbfs:/Volumes/ibge/ibge_sidra_population_gold/aggregates"                  # e.g. dbfs:/Volumes/{catalog}/{gold_schema}/aggregates
+quarantine_volume_path: "dbfs:/Volumes/ibge/ibge_sidra_population_silver/quarantine"        # invalid rows from Silver, default: dbfs:/Volumes/{catalog}/{silver_schema}/quarantine
+
+# ---------- Compute ----------
+compute_type: "cluster_id"                            # "cluster_id" | "serverless"
+cluster_id: "0609-145002-9j1f9vy7"                                # if compute_type=cluster_id, the existing cluster ID
+serverless_enabled: "false"                # "true" | "false"
+
+# ---------- File format defaults ----------
+default_input_format: "csv"            # "csv" | "json" | "parquet" | "delta"
+default_storage_format: "delta"                             # always delta downstream
+partition_by_default: "ingestion_date"            # e.g. "ingestion_date" | "" for none
+
+# ---------- Dataset identity ----------
+dataset_slug: "ibge-sidra-population"                            # lowercase-with-hyphens, used in table names
+dataset_display_name: "IBGE SIDRA Population Estimates"            # human-readable, used in report headers
+dataset_source: "IBGE SIDRA"                        # origin: "IBGE SIDRA", "Brasil.IO", "Kaggle X", etc.
+dataset_source_url: "https://sidra.ibge.gov.br/tabela/6579"                # canonical URL
+
+# ---------- Ingest metadata ----------
+ingestion_date_column: "ingestion_date"                     # added to every Bronze table
+source_file_column: "source_file"                           # preserved from raw filename
+batch_id_column: "batch_id"                                 # UUID per ingest run

@@ -1,0 +1,48 @@
+# --- ICM reference clone (already tracked upstream) ---
+_templates/icm-reference/
+
+# --- Personal notes inside the bundled Free Edition skill ---
+# The skill copy we bundle is generic. The session note from one specific
+# user's run is personal and should not ship with the public template.
+**/edu-lake-br-session-*.md
+
+# --- Active workspaces (post-setup) ---
+# Templates in _templates/ ARE tracked (they're the reusable scaffolding).
+# The ibge-sidra-population-pipeline/ workspace IS tracked as the
+# end-to-end worked example (proof the template works).
+# Other active workspaces under ~/workspaces/<name>-pipeline/ are
+# personal projects and should NOT be committed here. Initialize a
+# separate repo inside the active workspace if you want to version it.
+# Add new active workspaces to the ignore list as you create them:
+# kaggle-credit-pipeline/
+# brasil-io-eleicoes-pipeline/
+
+# --- Standard ignores ---
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# --- Databricks / Python noise ---
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# --- Databricks notebook cell output (when running locally) ---
+.databricks/
+*.dbc
+
+# --- Secrets (never commit tokens, even if Free Edition) ---
+.env
+.env.local
+*.pem
+*.key
+databrickscfg
